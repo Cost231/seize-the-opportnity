@@ -6,6 +6,7 @@ python 环境: 安装splinter库
 
 测试代码
 `from splinter import Browser `
+
 `b=Browser()`
 无报错则运行成功
 
