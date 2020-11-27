@@ -87,7 +87,7 @@ class OOP():
         
         try:
             driver=self.driver_name.get()
-            self.browser = Browser(driver_name=driver,headless=False)
+            self.browser = Browser(driver_name=driver,headless=True)
             self.browser.visit('https://elife.fudan.edu.cn/')
             self.browser.find_by_xpath("//div/input[@class='xndl']").click()
             self.browser.fill("username", self.username)
