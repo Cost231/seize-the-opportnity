@@ -5,7 +5,7 @@ python 环境: 安装splinter库<br>
 将浏览器驱动geckodriver.exe单独放在一个文件夹内放在firefox安装目录下（默认为C:\Program Files\Mozilla Firefox），并将此文件夹添加至环境变量<br>
 测试代码<br>
 `from splinter import Browser `<br>
-`b=Browser()`
+`b=Browser()`<br>
 无报错则运行成功<br><br>
 ## 2.运行
 建议在Anaconda prompt Shell 中运行，>>python 路径+GUI_beta.py（IDE中运行可能会因为兼容性问题导致尺寸大小有偏差）<br>
