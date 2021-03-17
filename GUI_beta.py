@@ -187,19 +187,40 @@ class OOP():
         url=Urldict[self.court_var.get()]+'&currentDate='+reserve_date
         
         def wait_for_the_midnight():
-            while (self.today.strftime('%d')==datetime.date.today().strftime('%d')):
+            while ((self.today.strftime('%d')==datetime.date.today().strftime('%d')) or (datetime.datetime.now().hour<6)):
+                print('current time: '+str(datetime.datetime.now().hour).zfill(2)+':'+str(datetime.datetime.now().minute).zfill(2))
+                sleep(1800)
+            while ((datetime.datetime.now().hour+datetime.datetime.now().minute/60)<6.8):
                 sleep(300)
-            self.browser.visit(url)
-            self.browser.find_by_tag('li').last.click()
-            self.browser.find_by_tag('img')[self.select_row].click()
+                print('current time: '+str(datetime.datetime.now().hour).zfill(2)+':'+str(datetime.datetime.now().minute).zfill(2))
+            while(datetime.datetime.now().hour<7):
+                sleep(15)
+                print('current time: '+str(datetime.datetime.now().hour).zfill(2)+':'+str(datetime.datetime.now().minute).zfill(2))
+
+
             try:
+                self.browser.visit(url)
+                self.browser.find_by_tag('img')[self.valid_sites[self.select_row]].click()
                 self.browser.fill('mobile',self.mobile)
                 self.browser.find_by_value(u' 预 约 ').click()
-                self.note2.configure('Job done')
-            except:
-                self.note2.configure(text='Error, something wrong happened')
-            else:
                 self.note2.configure(text='Job done')
+            except:
+                print("重新登陆")
+                self.browser.visit('https://elife.fudan.edu.cn/')
+                self.browser.find_by_xpath("//div/input[@class='xndl']").click()
+                self.browser.fill("username", self.username)
+                self.browser.fill("password", self.password)
+                self.browser.find_by_value(u'登录').click()
+                self.browser.cookies.all()
+                print("登陆成功")
+                self.browser.visit(url)
+                self.browser.find_by_tag('img')[self.valid_sites[self.select_row]].click()
+                self.browser.fill('mobile',self.mobile)
+                self.browser.find_by_value(u' 预 约 ').click()
+                self.note2.configure(text='Job done')
+                print("抢票成功")
+
+
             
         
         if self.select_row==-1 or self.browser_state != 'search':
@@ -212,6 +233,7 @@ class OOP():
         else:
             if Timedict[self.date.get()] <=2 :
                 try:
+                    self.browser.visit(url)
                     self.browser.find_by_tag('img')[self.valid_sites[self.select_row]].click()
                     self.browser.fill('mobile',self.mobile)
                     self.browser.find_by_value(u' 预 约 ').click()
